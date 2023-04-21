@@ -1,0 +1,17 @@
+import RPi.GPIO as GPIO                                             #Importing GPIO  RAspberry pi library
+
+trackSensor = 17                                                    #Setting tracker sensor to GPIO 17
+redLed = 4                                                          #Setting red LED to GPIO 4
+
+GPIO.setmode(GPIO.BCM)                                              #Setting mode to read GPIO pins
+GPIO.setup(redLed, GPIO.OUT)                                        #Setting red LED as output pin
+GPIO.setup(trackSensor, GPIO.IN, pull_up_down=GPIO.PUD_UP)          #Setting tracker as a pull up input
+GPIO.output(redLed, GPIO.HIGH)                                      #Setting red LED to read high (on)
+
+while True:
+    if GPIO.input(trackSensor) == GPIO.LOW:                         #Checking when tracker is low
+        print ('White line is detected')                            #Printing message
+        GPIO.output(redLed, GPIO.LOW)                               #Turns off red LED
+    else:
+        print ('...Black line is detected')                         #Printing message
+        GPIO.output(redLed, GPIO.HIGH)   
